@@ -135,10 +135,7 @@ This PRD defines the **backend scope, APIs, data models, and non-functional requ
 ### User
 
 * id
-* name
-* email
-* passwordHash
-* createdAt
+* username
 
 ### Content
 
@@ -146,7 +143,7 @@ This PRD defines the **backend scope, APIs, data models, and non-functional requ
 * userId
 * title
 * description
-* type (tweet | video | document | link | note)
+* type 
 * tags [string]
 * createdAt
 
@@ -156,6 +153,8 @@ This PRD defines the **backend scope, APIs, data models, and non-functional requ
 * userId
 * createdAt
 * isActive
+
+![schema](https://petal-estimate-4e9.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F085e8ad8-528e-47d7-8922-a23dc4016453%2F0bdc898f-1952-4a81-9dd0-3c21d75912e5%2FScreenshot_2024-11-16_at_5.35.07_PM.png?table=block&id=1407dfd1-0735-804d-a2ac-e4f06a6f662b&spaceId=085e8ad8-528e-47d7-8922-a23dc4016453&width=1420&userId=&cache=v2)
 
 ---
 
