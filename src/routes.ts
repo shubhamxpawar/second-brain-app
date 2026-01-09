@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { User } from "./models";
+import type { userAuthBody } from "./types";
 const router = Router()
 
 router.get("/", (req, res) => {
@@ -9,13 +10,15 @@ router.get("/", (req, res) => {
 //auth routes
 
 router.post("/auth/signup", async (req, res) => {
-    const body : object = req.body
-    if(!body){
+    const body = req.body as userAuthBody
+
+    if(!body.username || !body.password){
         console.log("invalid details")
-        res.send("invalid details")
+        return res.status(400).send("invalid details")
     }
 
-    const user : object | null = await User.findOne(body)
+    const user = await User.findOne(body)
+
     if(user){
         console.log("user already exists")
         return res.send("user doesnt exists")
@@ -28,13 +31,14 @@ router.post("/auth/signup", async (req, res) => {
 })
 
 router.post("/auth/login", async (req, res) => {
-    const body : object = req.body
-    if(!body){
+    const body = req.body as userAuthBody
+
+    if(!body.username || !body.password){
         console.log("invalid details")
-        res.send("invalid details")
+        return res.status(400).send("invalid details")
     }
 
-    const username : string = body.username
+    const username = body.username
     
     const user = await User.findOne({username})
     if(!user){
