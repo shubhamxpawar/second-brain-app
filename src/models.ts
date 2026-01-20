@@ -3,12 +3,12 @@ import { Schema } from "mongoose";
 
 //model interfaces
 
-interface IUser extends mongoose.Document {
+export interface IUser extends mongoose.Document {
   username: string;
   password: string;
 }
 
-interface ITag extends mongoose.Document{
+export interface ITag extends mongoose.Document{
   title: string;
 }
 
@@ -16,7 +16,7 @@ interface IContent extends mongoose.Document{
   title: string;
   type: string;
   link: string;
-  tags: mongoose.Types.ObjectId | ITag;
+  tags: [mongoose.Types.ObjectId | ITag];
   userId: mongoose.Types.ObjectId | IUser;
 }
 
@@ -55,7 +55,7 @@ const contentSchema = new Schema<IContent>({
   },
   type: {
     type: String,
-    enum: ["text", "docucment", "image", "video", "audio"],
+    enum: ["text", "document", "image", "video", "audio"],
     required: true,
   },
   link: { type: String, required: true },
