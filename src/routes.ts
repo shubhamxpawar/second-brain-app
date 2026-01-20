@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { User, Content, Tag } from "./models";
+//import {hash, compare} from "bcrypt"
 import type { userAuthBody, contentBody, tagBody } from "./types";
 const router = Router()
 
@@ -25,6 +26,15 @@ router.post("/auth/signup", async (req, res) => {
         return res.status(409).send("user already exists")
     }
 
+
+    // password hashing 
+    const hashedPassword = await Bun.password.hash(body.password,{
+        algorithm: "bcrypt",
+        cost: 4,
+    })
+
+    body.password = hashedPassword
+
     console.log("user : ", body)
     await User.create(body)
 
@@ -47,7 +57,10 @@ router.post("/auth/login", async (req, res) => {
         return res.status(404).send("user doesnt exist")
     }
 
-    if(user.password !== body.password) return res.send("incorrect password")
+    //check hashed password
+    const isMatch = await Bun.password.verify(body.password, user.password);
+
+    if(!isMatch) return res.status(401).send("incorrect password")
 
     return res.send("user logged in")
 })
